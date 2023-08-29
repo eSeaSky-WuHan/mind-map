@@ -65,6 +65,8 @@ function onControlPointMousemove(e) {
   let targetIndex = getAssociativeLineTargetIndex(node, toNode)
   const { associativeLineTargets, associativeLineTargetControlOffsets } =
       node.nodeData.data
+  const nodePos = this.getNodePos(node)
+  const toNodePos = this.getNodePos(toNode)
   let [startPoint, endPoint] = this.updateAllLinesPos(
       node,
       toNode,
@@ -84,7 +86,7 @@ function onControlPointMousemove(e) {
   let point2 = null
   // 拖拽的是控制点1
   if (this.mousedownControlPointKey === 'controlPoint1') {
-    startPoint = getNodePoint(node, '', 0, e)
+    startPoint = getNodePoint(nodePos, '', 0, e)
     point1 = {
       x,
       y
@@ -108,7 +110,7 @@ function onControlPointMousemove(e) {
     }
   } else {
     // 拖拽的是控制点2
-    endPoint = getNodePoint(toNode, '', 0, e)
+    endPoint = getNodePoint(toNodePos, '', 0, e)
     point1 = {
       x: startPoint.x + offsets[0].x,
       y: startPoint.y + offsets[0].y

@@ -314,6 +314,21 @@ class AssociativeLine {
     }
   }
 
+  // 计算节点偏移位置
+  getNodePos(node) {
+    const { translateX, translateY } = this.mindMap.draw.transform()
+    const { left, top, width, height } = node
+    let translateLeft = left + translateX
+    let translateTop = top + translateY
+    return {
+      left,
+      top,
+      translateLeft,
+      translateTop,
+      width,
+      height
+    }
+  }
   // 检测当前移动到的目标节点
   checkOverlapNode(x, y) {
     this.overlapNode = null
