@@ -70,7 +70,12 @@ export default {
     borderWidth: 0,
     borderDasharray: 'none',
     borderRadius: 5,
-    textDecoration: 'none'
+    textDecoration: 'none',
+    active: {
+      borderColor: 'rgb(57, 80, 96)',
+      borderWidth: 3,
+      borderDasharray: 'none'
+    }
   },
   // 二级节点样式
   second: {
@@ -88,7 +93,12 @@ export default {
     borderWidth: 1,
     borderDasharray: 'none',
     borderRadius: 5,
-    textDecoration: 'none'
+    textDecoration: 'none',
+    active: {
+      borderColor: 'rgb(57, 80, 96)',
+      borderWidth: 3,
+      borderDasharray: 'none'
+    }
   },
   // 三级及以下节点样式
   node: {
@@ -106,7 +116,12 @@ export default {
     borderWidth: 0,
     borderRadius: 5,
     borderDasharray: 'none',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    active: {
+      borderColor: 'rgb(57, 80, 96)',
+      borderWidth: 3,
+      borderDasharray: 'none'
+    }
   },
   // 概要节点样式
   generalization: {
@@ -124,7 +139,12 @@ export default {
     borderWidth: 1,
     borderDasharray: 'none',
     borderRadius: 5,
-    textDecoration: 'none'
+    textDecoration: 'none',
+    active: {
+      borderColor: 'rgb(57, 80, 96)',
+      borderWidth: 3,
+      borderDasharray: 'none'
+    }
   }
 }
 
@@ -158,8 +178,7 @@ const nodeSizeIndependenceList = [
   'backgroundImage',
   'backgroundRepeat',
   'backgroundPosition',
-  'backgroundSize',
-  'rootLineKeepSameInCurve'
+  'backgroundSize'
 ]
 export const checkIsNodeSizeIndependenceConfig = (config) => {
   let keys = Object.keys(config)

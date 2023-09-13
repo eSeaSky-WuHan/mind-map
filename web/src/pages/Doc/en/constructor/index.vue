@@ -39,7 +39,7 @@
 <td>data</td>
 <td>Object</td>
 <td>{}</td>
-<td>Mind map data, Please refer to the introduction of 【Data structure】 below</td>
+<td>Mind map data, refer to: <a href="https://github.com/wanglin2/mind-map/blob/main/simple-mind-map/example/exampleData.js">exampleData.js</a></td>
 <td></td>
 </tr>
 <tr>
@@ -199,8 +199,8 @@
 <tr>
 <td>expandBtnStyle（v0.5.0+）</td>
 <td>Object</td>
-<td>{ color: '#808080', fill: '#fff', fontSize: 13, strokeColor: '#333333' }</td>
-<td>Expand the color of the stow button, (The fontSize and strokeColor fields were added in version 0.7.0+to set the text style for displaying the number of nodes when folded)</td>
+<td>{ color: '#808080', fill: '#fff' }</td>
+<td>Expand the color of the stow button</td>
 <td></td>
 </tr>
 <tr>
@@ -208,20 +208,6 @@
 <td>Object</td>
 <td>{ open: '', close: '' }</td>
 <td>Customize the icon of the expand/collapse button, and you can transfer the svg string of the icon</td>
-<td></td>
-</tr>
-<tr>
-<td>expandBtnNumHandler（v0.7.0+）</td>
-<td>Function</td>
-<td></td>
-<td>Used to customize the content of displaying the number of nodes when folding, receiving a parameter that represents the instance of the folding node, and returning a number or string that represents the final displayed content. For example, when the number is greater than 99, 99 can be displayed+</td>
-<td></td>
-</tr>
-<tr>
-<td>isShowExpandNum（v0.7.0+）</td>
-<td>Boolean</td>
-<td>true</td>
-<td>Display the number of folded nodes when they are folded up</td>
 <td></td>
 </tr>
 <tr>
@@ -437,76 +423,12 @@
 <tr>
 <td>enableDblclickReset（v0.6.17+）</td>
 <td>Boolean</td>
-<td>true(v0.7.0+changed to false)</td>
-<td>Turn on the mouse and double-click to reset the position and zoom of the mind map</td>
-<td></td>
-</tr>
-<tr>
-<td>minExportImgCanvasScale（v0.7.0+）</td>
-<td>Number</td>
-<td>2</td>
-<td>The scaling factor of canvas when exporting images and PDFs, which is set to the maximum value of window.devicePixelRatio to improve image clarity</td>
-<td></td>
-</tr>
-<tr>
-<td>hoverRectColor（v0.7.0+）</td>
-<td>String</td>
-<td>rgb(94, 200, 248)</td>
-<td>The node mouse hover and the rectangular border color displayed when activated will add a transparency of 0.6 when hovering</td>
-<td></td>
-</tr>
-<tr>
-<td>hoverRectPadding（v0.7.0+）</td>
-<td>Number</td>
-<td>2</td>
-<td>The distance between the node mouse hover and the displayed rectangular border when activated and the node content</td>
-<td></td>
-</tr>
-<tr>
-<td>selectTextOnEnterEditText（v0.7.0+）</td>
-<td>Boolean</td>
 <td>true</td>
-<td>Is the text selected by default when double-clicking a node to enter node text editing? By default, it will only be selected when creating a new node</td>
+<td>Turn on the mouse and double-click to reset the position and zoom of the mind map</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h3>Data structure</h3>
-<p>The basic data structure is as follows:</p>
-<pre class="hljs"><code>{
-  <span class="hljs-attr">data</span>: {
-    <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// The text of the node can be rich text, which is in HTML format. In this case, richText should be set to true</span>
-    <span class="hljs-attr">richText</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// Is the text of the node in rich text mode</span>
-    <span class="hljs-attr">expand</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// Whether the node is expanded</span>
-    <span class="hljs-attr">uid</span>: <span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-comment">// The unique ID of the node, which may not be passed, will be generated internally</span>
-    <span class="hljs-attr">icon</span>: [], <span class="hljs-comment">// The format of the icon can be found in the &quot;插入和扩展节点图标&quot; section of the tutorial</span>
-    <span class="hljs-attr">image</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// URL of the image</span>
-    <span class="hljs-attr">imageTitle</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// The title of the image can be blank</span>
-    <span class="hljs-attr">imageSize</span>: { <span class="hljs-comment">// The size of the image</span>
-      <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>, <span class="hljs-comment">// The width of the image, mandatory</span>
-      <span class="hljs-attr">height</span>: <span class="hljs-number">100</span>, <span class="hljs-comment">// The height of the image is mandatory</span>
-      <span class="hljs-attr">custom</span>: <span class="hljs-literal">false</span> <span class="hljs-comment">// If set to true, the display size of the image is not controlled by the theme, and is based on imageSize.width and imageSize.height</span>
-    },
-    <span class="hljs-attr">hyperlink</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// Hyperlink address</span>
-    <span class="hljs-attr">hyperlinkTitle</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// Title of hyperlink</span>
-    <span class="hljs-attr">note</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// Content of remarks</span>
-    <span class="hljs-attr">tag</span>: [], <span class="hljs-comment">// Tag list</span>
-    <span class="hljs-attr">generalization</span>: {<span class="hljs-comment">// The summary of the node, if there is no summary, the generalization can be set to null</span>
-      <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-comment">// Summary Text</span>
-    },
-    <span class="hljs-attr">associativeLineTargets</span>: [<span class="hljs-string">&#x27;&#x27;</span>],<span class="hljs-comment">// If there are associated lines, then it is the uid list of the target node</span>
-    <span class="hljs-attr">associativeLineText</span>: <span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-comment">// Association Line Text</span>
-    <span class="hljs-comment">// ...For other style fields, please refer to the topic</span>
-  },
-  children [<span class="hljs-comment">// Child nodes, with consistent structure and root nodes</span>
-    {
-      <span class="hljs-attr">data</span>: {},
-      <span class="hljs-attr">children</span>: []
-    }
-  ]
-}
-</code></pre>
-<p>If you want to add custom fields, you can add them to the same level as 'data' and 'children'. If you want to add them to the 'data' object, please use the <code>_</code> Name your custom field at the beginning, and it will be used internally to determine whether it is a custom field.</p>
 <h3>Watermark config</h3>
 <table>
 <thead>
@@ -971,12 +893,12 @@ redo. All commands are as follows:</p>
 <tr>
 <td>SET_NODE_STYLE</td>
 <td>Modify node single style</td>
-<td>node (the node to set the style of), prop (style property), value (style property value), isActive (v0.7.0+has been abandoned, boolean, whether the style being set is for the active state)</td>
+<td>node (the node to set the style of), prop (style property), value (style property value), isActive (boolean, whether the style being set is for the active state)</td>
 </tr>
 <tr>
 <td>SET_NODE_STYLEs（v0.6.12+）</td>
 <td>Modify multiple styles of nodes</td>
-<td>node（the node to set the style of）、style（Style object，key is style prop，value is style value）、isActive（v0.7.0+has been abandoned, boolean, whether the style being set is for the active state）</td>
+<td>node（the node to set the style of）、style（Style object，key is style prop，value is style value）、isActive（boolean, whether the style being set is for the active state）</td>
 </tr>
 <tr>
 <td>SET_NODE_ACTIVE</td>

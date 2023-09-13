@@ -63,7 +63,7 @@ export default class TextEdit {
         const node = activeNodeList[0]
         // 当正在输入中文或英文或数字时，如果没有按下组合键，那么自动进入文本编辑模式
         if (node && this.checkIsAutoEnterTextEditKey(e)) {
-          this.show(node, e, false, true)
+          this.show(node)
         }
       })
     }
@@ -93,8 +93,7 @@ export default class TextEdit {
 
   //  显示文本编辑框
   // isInserting：是否是刚创建的节点
-  // isFromKeyDown：是否是在按键事件进入的编辑
-  async show(node, e, isInserting = false, isFromKeyDown = false) {
+  async show(node, e, isInserting = false) {
     // 使用了自定义节点内容那么不响应编辑事件
     if (node.isUseCustomNodeContent()) {
       return
@@ -115,10 +114,10 @@ export default class TextEdit {
     this.mindMap.view.translateXY(offsetLeft, offsetTop)
     let rect = node._textData.node.node.getBoundingClientRect()
     if (this.mindMap.richText) {
-      this.mindMap.richText.showEditText(node, rect, isInserting, isFromKeyDown)
+      this.mindMap.richText.showEditText(node, rect, isInserting)
       return
     }
-    this.showEditTextBox(node, rect, isInserting, isFromKeyDown)
+    this.showEditTextBox(node, rect, isInserting)
   }
 
   // 处理画布缩放
@@ -136,10 +135,8 @@ export default class TextEdit {
   }
 
   //  显示文本编辑框
-  showEditTextBox(node, rect, isInserting, isFromKeyDown) {
+  showEditTextBox(node, rect, isInserting) {
     if (this.showTextEdit) return
-    const { nodeTextEditZIndex, textAutoWrapWidth, selectTextOnEnterEditText } =
-      this.mindMap.opt
     this.mindMap.emit('before_show_text_edit')
     this.registerTmpShortcut()
     if (!this.textEditNode) {
@@ -172,14 +169,15 @@ export default class TextEdit {
     )
     let isMultiLine = node._textData.node.attr('data-ismultiLine') === 'true'
     node.style.domText(this.textEditNode, scale, isMultiLine)
-    this.textEditNode.style.zIndex = nodeTextEditZIndex
+    this.textEditNode.style.zIndex = this.mindMap.opt.nodeTextEditZIndex
     this.textEditNode.innerHTML = textLines.join('<br>')
     this.textEditNode.style.minWidth = rect.width + 10 + 'px'
     this.textEditNode.style.minHeight = rect.height + 6 + 'px'
     this.textEditNode.style.left = rect.left + 'px'
     this.textEditNode.style.top = rect.top + 'px'
     this.textEditNode.style.display = 'block'
-    this.textEditNode.style.maxWidth = textAutoWrapWidth * scale + 'px'
+    this.textEditNode.style.maxWidth =
+      this.mindMap.opt.textAutoWrapWidth * scale + 'px'
     if (isMultiLine && lineHeight !== 1) {
       this.textEditNode.style.transform = `translateY(${
         -((lineHeight * fontSize - fontSize) / 2) * scale
@@ -190,7 +188,7 @@ export default class TextEdit {
     // if (!this.cacheEditingText) {
     //   this.selectNodeText()
     // }
-    if (isInserting || (selectTextOnEnterEditText && !isFromKeyDown)) {
+    if (isInserting) {
       this.selectNodeText()
     } else {
       this.focus()

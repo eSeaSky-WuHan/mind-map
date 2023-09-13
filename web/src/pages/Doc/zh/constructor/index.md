@@ -25,7 +25,7 @@ const mindMap = new MindMap({
 | 字段名称                         | 类型    | 默认值           | 描述                                                         | 是否必填 |
 | -------------------------------- | ------- | ---------------- | ------------------------------------------------------------ | -------- |
 | el                               | Element |                  | 容器元素，必须为DOM元素                                      | 是       |
-| data                             | Object  | {}               | 思维导图数据，可参考下方【数据结构】介绍 |          |
+| data                             | Object  | {}               | 思维导图数据，可参考：[exampleData.js](https://github.com/wanglin2/mind-map/blob/main/simple-mind-map/example/exampleData.js) |          |
 | layout                           | String  | logicalStructure | 布局类型，可选列表：logicalStructure（逻辑结构图）、mindMap（思维导图）、catalogOrganization（目录组织图）、organizationStructure（组织结构图）、timeline（v0.5.4+，时间轴）、timeline2（v0.5.4+，上下交替型时间轴）、fishbone（v0.5.4+，鱼骨图） |          |
 | fishboneDeg（v0.5.4+）                      | Number |  45          |  设置鱼骨结构图的斜线角度               |        |
 | theme                            | String  | default          | 主题，可选列表：default（默认）、classic（脑图经典）、minions（小黄人）、pinkGrape（粉红葡萄）、mint（薄荷）、gold（金色vip）、vitalityOrange（活力橙）、greenLeaf（绿叶）、dark2（暗色2）、skyGreen（天清绿）、classic2（脑图经典2）、classic3（脑图经典3）、classic4（脑图经典4，v0.2.0+）、classicGreen（经典绿）、classicBlue（经典蓝）、blueSky（天空蓝）、brainImpairedPink（脑残粉）、dark（暗色）、earthYellow（泥土黄）、freshGreen（清新绿）、freshRed（清新红）、romanticPurple（浪漫紫）、simpleBlack（v0.5.4+简约黑）、courseGreen（v0.5.4+课程绿）、coffee（v0.5.4+咖啡）、redSpirit（v0.5.4+红色精神）、blackHumour（v0.5.4+黑色幽默）、lateNightOffice（v0.5.4+深夜办公室）、blackGold（v0.5.4+黑金）、avocado（v.5.10-fix.2+牛油果）、autumn（v.5.10-fix.2+秋天）、orangeJuice（v.5.10-fix.2+橙汁） |          |
@@ -48,10 +48,8 @@ const mindMap = new MindMap({
 | mousewheelZoomActionReverse（v0.6.5+）     | Boolean  | false |  当mousewheelAction设为zoom时，默认向前滚动是缩小，向后滚动是放大，如果该属性设为true，那么会反过来  |          |
 | defaultInsertSecondLevelNodeText（v0.4.7+）     | String  | 二级节点 | 默认插入的二级节点的文字               |          |
 | defaultInsertBelowSecondLevelNodeText（v0.4.7+）     | String  | 分支主题 | 默认插入的二级以下节点的文字               |          |
-| expandBtnStyle（v0.5.0+）     | Object  | { color: '#808080', fill: '#fff', fontSize: 13, strokeColor: '#333333' } | 展开收起按钮的颜色，（fontSize及strokeColor字段为0.7.0+版本新增的，用于设置收起时显示节点数量的文字样式）  |          |
+| expandBtnStyle（v0.5.0+）     | Object  | { color: '#808080', fill: '#fff' } | 展开收起按钮的颜色  |          |
 | expandBtnIcon（v0.5.0+）     | Object  | { open: '', close: '' } | 自定义展开收起按钮的图标，可以传图标的svg字符串  |          |
-| expandBtnNumHandler（v0.7.0+）     | Function  |  | 用于自定义收起时显示节点数量的内容，接收一个参数，代表收起的节点实例，需要返回一个数字或字符串，代表最终显示的内容，比如你可以当数量大于99时，显示99+  |          |
-| isShowExpandNum（v0.7.0+）     | Boolean  | true | 节点收起时是否显示收起的数量  |          |
 | enableShortcutOnlyWhenMouseInSvg（v0.5.1+）     | Boolean  | true | 是否只有当鼠标在画布内才响应快捷键事件  |          |
 | enableNodeTransitionMove（v0.5.1+）（v0.6.7+已去除该特性）     | Boolean  | true | 是否开启节点动画过渡  |          |
 | nodeTransitionMoveDuration（v0.5.1+）（v0.6.7+已去除该特性）     | Number  | 300 | 如果开启节点动画过渡，可以通过该属性设置过渡的时间，单位ms  |          |
@@ -82,52 +80,7 @@ const mindMap = new MindMap({
 | errorHandler（v0.6.15+）     | Function  |  | 自定义错误处理函数，目前只会抛出一些异步逻辑出错的情况。可以传递一个函数，会接收两个参数，第一个为错误的类型，第二个为错误对象 |          |
 | disableMouseWheelZoom（v0.6.15+）     | Boolean  | false | 禁止鼠标滚轮缩放，你仍旧可以使用api进行缩放 |          |
 | resetCss（v0.6.16+）     | String  |  * { margin: 0; padding: 0; box-sizing: border-box; } | 设置导出图片和svg时，针对富文本节点内容，也就是嵌入到svg中的html节点的默认样式覆盖，如果不覆盖，节点内容会发生偏移 |          |
-| enableDblclickReset（v0.6.17+）     | Boolean  | true（v0.7.0+改为false）  | 开启鼠标双击复位思维导图位置及缩放 |          |
-| minExportImgCanvasScale（v0.7.0+）     | Number  | 2  | 导出图片和pdf时canvas的缩放倍数，该配置会和window.devicePixelRatio值取最大值，用于提升图片清晰度 |          |
-| hoverRectColor（v0.7.0+）     | String  | rgb(94, 200, 248)  | 节点鼠标hover和激活时显示的矩形边框颜色，hover时会添加0.6的透明度 |          |
-| hoverRectPadding（v0.7.0+）     | Number  | 2  | 节点鼠标hover和激活时显示的矩形边框距节点内容的距离 |          |
-| selectTextOnEnterEditText（v0.7.0+）     | Boolean  | true  | 双击节点进入节点文本编辑时是否默认选中文本，默认只在创建新节点时会选中 |          |
-
-### 数据结构
-
-基本的数据结构如下：
-
-```js
-{
-  data: {
-    text: '', // 节点的文本，可以是富文本，也就是html格式的，此时richText要设为true
-    richText: false, // 节点的文本是否是富文本模式
-    expand: true, // 节点是否展开
-    uid: '',// 节点唯一的id，可不传，内部会生成
-    icon: [], // 图标，格式可参考教程里的【插入和扩展节点图标】章节
-    image: '', // 图片的url
-    imageTitle: '', // 图片的标题，可为空
-    imageSize: { // 图片的尺寸
-      width: 100, // 图片的宽度，必传
-      height: 100, // 图片的高度，必传
-      custom: false // 如果设为true，图片的显示大小不受主题控制，以imageSize.width和imageSize.height为准
-    },
-    hyperlink: '', // 超链接地址
-    hyperlinkTitle: '', // 超链接的标题
-    note: '', // 备注的内容
-    tag: [], // 标签列表
-    generalization: {// 节点的概要，如果没有概要generalization设为null即可
-      text: ''// 概要的文本
-    },
-    associativeLineTargets: [''],// 如果存在关联线，那么为目标节点的uid列表
-    associativeLineText: '',// 关联线文本
-    // ...其他样式字段，可以参考主题
-  },
-  children [// 子节点，结构和根节点一致
-    {
-      data: {},
-      children: []
-    }
-  ]
-}
-```
-
-如果你要添加自定义的字段，可以添加到`data`、`children`同级，如果你要添加到`data`对象里，那么请使用`_`开头来命名你的自定义字段，内部会通过这个来判断是否是自定义字段。
+| enableDblclickReset（v0.6.17+）     | Boolean  | true  | 开启鼠标双击复位思维导图位置及缩放 |          |
 
 ### 水印配置
 
@@ -377,8 +330,8 @@ mindMap.updateConfig({
 | REMOVE_NODE                         | 删除节点，操作节点为当前激活的节点或指定节点                         |   appointNodes（v0.4.7+，可选，指定节点，指定多个节点可以传一个数组）                                                           |
 | PASTE_NODE                          | 粘贴节点到节点，操作节点为当前激活的节点                     | data（要粘贴的节点数据，一般通过`renderer.copyNode()`方法和`renderer.cutNode()`方法获取） |
 | CUT_NODE                            | 剪切节点，操作节点为当前激活的节点，如果有多个激活节点，只会对第一个有效，对根节点使用无效 | callback(回调函数，剪切的节点数据会通过调用该函数并通过参数返回) |
-| SET_NODE_STYLE                      | 修改节点单个样式                                                 | node（要设置样式的节点）、style（样式属性）、value（样式属性值）、isActive（v0.7.0+已废弃，布尔值，是否设置的是激活状态的样式） |
-| SET_NODE_STYLEs（v0.6.12+）                      | 修改节点多个样式                                                 | node（要设置样式的节点）、style（样式对象，key为样式属性，value为样式值）、isActive（v0.7.0+已废弃，布尔值，是否设置的是激活状态的样式） |
+| SET_NODE_STYLE                      | 修改节点单个样式                                                 | node（要设置样式的节点）、style（样式属性）、value（样式属性值）、isActive（布尔值，是否设置的是激活状态的样式） |
+| SET_NODE_STYLEs（v0.6.12+）                      | 修改节点多个样式                                                 | node（要设置样式的节点）、style（样式对象，key为样式属性，value为样式值）、isActive（布尔值，是否设置的是激活状态的样式） |
 | SET_NODE_ACTIVE                     | 设置节点是否激活                                             | node（要设置的节点）、active（布尔值，是否激活）             |
 | CLEAR_ACTIVE_NODE                   | 清除当前已激活节点的激活状态，操作节点为当前激活的节点       |                                                              |
 | SET_NODE_EXPAND                     | 设置节点是否展开                                             | node（要设置的节点）、expand（布尔值，是否展开）             |

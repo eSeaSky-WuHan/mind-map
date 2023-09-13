@@ -39,7 +39,7 @@
 <td>data</td>
 <td>Object</td>
 <td>{}</td>
-<td>思维导图数据，可参考下方【数据结构】介绍</td>
+<td>思维导图数据，可参考：<a href="https://github.com/wanglin2/mind-map/blob/main/simple-mind-map/example/exampleData.js">exampleData.js</a></td>
 <td></td>
 </tr>
 <tr>
@@ -199,8 +199,8 @@
 <tr>
 <td>expandBtnStyle（v0.5.0+）</td>
 <td>Object</td>
-<td>{ color: '#808080', fill: '#fff', fontSize: 13, strokeColor: '#333333' }</td>
-<td>展开收起按钮的颜色，（fontSize及strokeColor字段为0.7.0+版本新增的，用于设置收起时显示节点数量的文字样式）</td>
+<td>{ color: '#808080', fill: '#fff' }</td>
+<td>展开收起按钮的颜色</td>
 <td></td>
 </tr>
 <tr>
@@ -208,20 +208,6 @@
 <td>Object</td>
 <td>{ open: '', close: '' }</td>
 <td>自定义展开收起按钮的图标，可以传图标的svg字符串</td>
-<td></td>
-</tr>
-<tr>
-<td>expandBtnNumHandler（v0.7.0+）</td>
-<td>Function</td>
-<td></td>
-<td>用于自定义收起时显示节点数量的内容，接收一个参数，代表收起的节点实例，需要返回一个数字或字符串，代表最终显示的内容，比如你可以当数量大于99时，显示99+</td>
-<td></td>
-</tr>
-<tr>
-<td>isShowExpandNum（v0.7.0+）</td>
-<td>Boolean</td>
-<td>true</td>
-<td>节点收起时是否显示收起的数量</td>
 <td></td>
 </tr>
 <tr>
@@ -437,76 +423,12 @@
 <tr>
 <td>enableDblclickReset（v0.6.17+）</td>
 <td>Boolean</td>
-<td>true（v0.7.0+改为false）</td>
-<td>开启鼠标双击复位思维导图位置及缩放</td>
-<td></td>
-</tr>
-<tr>
-<td>minExportImgCanvasScale（v0.7.0+）</td>
-<td>Number</td>
-<td>2</td>
-<td>导出图片和pdf时canvas的缩放倍数，该配置会和window.devicePixelRatio值取最大值，用于提升图片清晰度</td>
-<td></td>
-</tr>
-<tr>
-<td>hoverRectColor（v0.7.0+）</td>
-<td>String</td>
-<td>rgb(94, 200, 248)</td>
-<td>节点鼠标hover和激活时显示的矩形边框颜色，hover时会添加0.6的透明度</td>
-<td></td>
-</tr>
-<tr>
-<td>hoverRectPadding（v0.7.0+）</td>
-<td>Number</td>
-<td>2</td>
-<td>节点鼠标hover和激活时显示的矩形边框距节点内容的距离</td>
-<td></td>
-</tr>
-<tr>
-<td>selectTextOnEnterEditText（v0.7.0+）</td>
-<td>Boolean</td>
 <td>true</td>
-<td>双击节点进入节点文本编辑时是否默认选中文本，默认只在创建新节点时会选中</td>
+<td>开启鼠标双击复位思维导图位置及缩放</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h3>数据结构</h3>
-<p>基本的数据结构如下：</p>
-<pre class="hljs"><code>{
-  <span class="hljs-attr">data</span>: {
-    <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// 节点的文本，可以是富文本，也就是html格式的，此时richText要设为true</span>
-    <span class="hljs-attr">richText</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 节点的文本是否是富文本模式</span>
-    <span class="hljs-attr">expand</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 节点是否展开</span>
-    <span class="hljs-attr">uid</span>: <span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-comment">// 节点唯一的id，可不传，内部会生成</span>
-    <span class="hljs-attr">icon</span>: [], <span class="hljs-comment">// 图标，格式可参考教程里的【插入和扩展节点图标】章节</span>
-    <span class="hljs-attr">image</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// 图片的url</span>
-    <span class="hljs-attr">imageTitle</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// 图片的标题，可为空</span>
-    <span class="hljs-attr">imageSize</span>: { <span class="hljs-comment">// 图片的尺寸</span>
-      <span class="hljs-attr">width</span>: <span class="hljs-number">100</span>, <span class="hljs-comment">// 图片的宽度，必传</span>
-      <span class="hljs-attr">height</span>: <span class="hljs-number">100</span>, <span class="hljs-comment">// 图片的高度，必传</span>
-      <span class="hljs-attr">custom</span>: <span class="hljs-literal">false</span> <span class="hljs-comment">// 如果设为true，图片的显示大小不受主题控制，以imageSize.width和imageSize.height为准</span>
-    },
-    <span class="hljs-attr">hyperlink</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// 超链接地址</span>
-    <span class="hljs-attr">hyperlinkTitle</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// 超链接的标题</span>
-    <span class="hljs-attr">note</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-comment">// 备注的内容</span>
-    <span class="hljs-attr">tag</span>: [], <span class="hljs-comment">// 标签列表</span>
-    <span class="hljs-attr">generalization</span>: {<span class="hljs-comment">// 节点的概要，如果没有概要generalization设为null即可</span>
-      <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;&#x27;</span><span class="hljs-comment">// 概要的文本</span>
-    },
-    <span class="hljs-attr">associativeLineTargets</span>: [<span class="hljs-string">&#x27;&#x27;</span>],<span class="hljs-comment">// 如果存在关联线，那么为目标节点的uid列表</span>
-    <span class="hljs-attr">associativeLineText</span>: <span class="hljs-string">&#x27;&#x27;</span>,<span class="hljs-comment">// 关联线文本</span>
-    <span class="hljs-comment">// ...其他样式字段，可以参考主题</span>
-  },
-  children [<span class="hljs-comment">// 子节点，结构和根节点一致</span>
-    {
-      <span class="hljs-attr">data</span>: {},
-      <span class="hljs-attr">children</span>: []
-    }
-  ]
-}
-</code></pre>
-<p>如果你要添加自定义的字段，可以添加到<code>data</code>、<code>children</code>同级，如果你要添加到<code>data</code>对象里，那么请使用<code>_</code>开头来命名你的自定义字段，内部会通过这个来判断是否是自定义字段。</p>
 <h3>水印配置</h3>
 <table>
 <thead>
@@ -966,12 +888,12 @@ mindMap.setTheme(<span class="hljs-string">&#x27;主题名称&#x27;</span>)
 <tr>
 <td>SET_NODE_STYLE</td>
 <td>修改节点单个样式</td>
-<td>node（要设置样式的节点）、style（样式属性）、value（样式属性值）、isActive（v0.7.0+已废弃，布尔值，是否设置的是激活状态的样式）</td>
+<td>node（要设置样式的节点）、style（样式属性）、value（样式属性值）、isActive（布尔值，是否设置的是激活状态的样式）</td>
 </tr>
 <tr>
 <td>SET_NODE_STYLEs（v0.6.12+）</td>
 <td>修改节点多个样式</td>
-<td>node（要设置样式的节点）、style（样式对象，key为样式属性，value为样式值）、isActive（v0.7.0+已废弃，布尔值，是否设置的是激活状态的样式）</td>
+<td>node（要设置样式的节点）、style（样式对象，key为样式属性，value为样式值）、isActive（布尔值，是否设置的是激活状态的样式）</td>
 </tr>
 <tr>
 <td>SET_NODE_ACTIVE</td>

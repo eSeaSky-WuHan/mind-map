@@ -1,4 +1,4 @@
-import { checkIsNodeStyleDataKey } from '../utils/index'
+import { nodeDataNoStylePropList } from '../constants/constant'
 
 // 格式刷插件
 class Painter {
@@ -49,13 +49,13 @@ class Painter {
       !this.isInPainter ||
       !this.painterNode ||
       !node ||
-      node.uid === this.painterNode.uid
+      node === this.painterNode
     )
       return
     const style = {}
     const painterNodeData = this.painterNode.nodeData.data
     Object.keys(painterNodeData).forEach(key => {
-      if (checkIsNodeStyleDataKey(key)) {
+      if (!nodeDataNoStylePropList.includes(key)) {
         style[key] = painterNodeData[key]
       }
     })
@@ -67,11 +67,6 @@ class Painter {
 
   // 插件被移除前做的事情
   beforePluginRemove() {
-    this.unBindEvent()
-  }
-
-  // 插件被卸载前做的事情
-  beforePluginDestroy() {
     this.unBindEvent()
   }
 }

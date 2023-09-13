@@ -11,8 +11,6 @@ class Select {
     this.mouseDownY = 0
     this.mouseMoveX = 0
     this.mouseMoveY = 0
-    this.isSelecting = false
-    this.cacheActiveList = []
     this.bindEvent()
   }
 
@@ -32,7 +30,6 @@ class Select {
       }
       e.preventDefault()
       this.isMousedown = true
-      this.cacheActiveList = [...this.mindMap.renderer.activeNodeList]
       let { x, y } = this.mindMap.toPos(e.clientX, e.clientY)
       this.mouseDownX = x
       this.mouseDownY = y
@@ -55,7 +52,7 @@ class Select {
         return
       }
       clearTimeout(this.autoMoveTimer)
-      this.onMove(e.clientX, e.clientY)
+      this.onMove(x, y)
     })
     this.mindMap.on('mouseup', () => {
       if (this.mindMap.opt.readonly) {
@@ -64,45 +61,20 @@ class Select {
       if (!this.isMousedown) {
         return
       }
-      this.checkTriggerNodeActiveEvent()
-      clearTimeout(this.autoMoveTimer)
-      this.isMousedown = false
-      this.cacheActiveList = []
-      if (this.rect) this.rect.remove()
-      this.rect = null
-      setTimeout(() => {
-        this.isSelecting = false
-      }, 0)
-    })
-  }
-
-  // 如果激活节点改变了，那么触发事件
-  checkTriggerNodeActiveEvent() {
-    let isNumChange = this.cacheActiveList.length !== this.mindMap.renderer.activeNodeList.length
-    let isNodeChange = false
-    if (!isNumChange) {
-      for(let i = 0; i < this.cacheActiveList.length; i++) {
-        let cur = this.cacheActiveList[i]
-        if (!this.mindMap.renderer.activeNodeList.find((item) => {
-          return item.nodeData.data.uid === cur.nodeData.data.uid
-        })){
-          isNodeChange = true
-          break
-        }
-      }
-    }
-    if (isNumChange || isNodeChange) {
       this.mindMap.emit(
         'node_active',
         null,
-        [...this.mindMap.renderer.activeNodeList]
+        this.mindMap.renderer.activeNodeList
       )
-    }
+      clearTimeout(this.autoMoveTimer)
+      this.isMousedown = false
+      if (this.rect) this.rect.remove()
+      this.rect = null
+    })
   }
 
   //  鼠标移动事件
   onMove(x, y) {
-    this.isSelecting = true
     // 绘制矩形
     this.rect.plot([
       [this.mouseDownX, this.mouseDownY],
@@ -199,11 +171,6 @@ class Select {
         // })
       }
     })
-  }
-
-  // 是否存在选区
-  hasSelectRange() {
-    return this.isSelecting
   }
 }
 

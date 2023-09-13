@@ -11,11 +11,10 @@ import {
   layoutValueList,
   CONSTANTS,
   commonCaches,
-  ERROR_TYPES,
-  cssContent
+  ERROR_TYPES
 } from './src/constants/constant'
 import { SVG } from '@svgdotjs/svg.js'
-import { simpleDeepClone, getType, getObjectChangedProps } from './src/utils'
+import { simpleDeepClone, getType } from './src/utils'
 import defaultTheme, {
   checkIsNodeSizeIndependenceConfig
 } from './src/themes/default'
@@ -37,10 +36,6 @@ class MindMap {
     this.width = this.elRect.width
     this.height = this.elRect.height
     if (this.width <= 0 || this.height <= 0) throw new Error('容器元素el的宽高不能为0')
-
-    // 添加css
-    this.cssEl = null
-    this.addCss()
 
     // 画布
     this.svg = SVG().addTo(this.el).size(this.width, this.height)
@@ -104,19 +99,6 @@ class MindMap {
     // 检查主题配置
     opt.theme = opt.theme && theme[opt.theme] ? opt.theme : 'default'
     return opt
-  }
-
-  // 添加必要的css样式到页面
-  addCss() {
-    this.cssEl = document.createElement('style')
-    this.cssEl.type = 'text/css'
-    this.cssEl.innerHTML = cssContent
-    document.head.appendChild(this.cssEl)
-  }
-
-  // 移除css
-  removeCss() {
-    document.head.removeChild(this.cssEl)
   }
 
   //  渲染，部分渲染
@@ -201,11 +183,9 @@ class MindMap {
 
   //  设置主题配置
   setThemeConfig(config) {
-    // 计算改变了的配置
-    const changedConfig = getObjectChangedProps(this.themeConfig, config)
     this.opt.themeConfig = config
     // 检查改变的是否是节点大小无关的主题属性
-    let res = checkIsNodeSizeIndependenceConfig(changedConfig)
+    let res = checkIsNodeSizeIndependenceConfig(config)
     this.render(null, res ? '' : CONSTANTS.CHANGE_THEME)
   }
 
@@ -359,8 +339,6 @@ class MindMap {
     draw.translate(-rect.x + elRect.left, -rect.y + elRect.top)
     // 克隆一份数据
     let clone = svg.clone()
-    // 添加必要的样式
-    clone.add(SVG(`<style>${ cssContent }</style>`))
     // 如果实际图形宽高超出了屏幕宽高，且存在水印的话需要重新绘制水印，否则会出现超出部分没有水印的问题
     if (
       (rect.width > origWidth || rect.height > origHeight) &&
@@ -428,9 +406,6 @@ class MindMap {
   destroy() {
     // 移除插件
     ;[...MindMap.pluginList].forEach(plugin => {
-      if (this[plugin.instanceName].beforePluginDestroy) {
-        this[plugin.instanceName].beforePluginDestroy()
-      }
       this[plugin.instanceName] = null
     })
     // 解绑事件
@@ -439,9 +414,7 @@ class MindMap {
     this.svg.remove()
     // 去除给容器元素设置的背景样式
     Style.removeBackgroundStyle(this.el)
-    this.el.innerHTML = ''
     this.el = null
-    this.removeCss()
   }
 }
 

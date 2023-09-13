@@ -29,8 +29,6 @@ export default [
       { path: 'course20', title: '如何自定义节点内容' },
       { path: 'course21', title: '如何复制、剪切、粘贴' },
       { path: 'course22', title: '如何实现搜索、替换' },
-      { path: 'course23', title: '如何渲染滚动条' },
-      { path: 'course24', title: '如何开发一个插件' },
       { path: 'doExport', title: 'Export 插件' },
       { path: 'drag', title: 'Drag插件' },
       { path: 'introduction', title: '简介' },
@@ -54,13 +52,8 @@ export default [
       { path: 'nodeImgAdjust', title: 'NodeImgAdjust插件' },
       { path: 'search', title: 'Search插件' },
       { path: 'painter', title: 'Painter插件' },
-      { path: 'painter', title: 'Painter插件' },
-      { path: 'scrollbar', title: 'Scrollbar插件' },
       { path: 'help1', title: '概要/关联线' },
-      { path: 'help2', title: '客户端' },
-      { path: 'help3', title: '打开预览在线文件' },
-      { path: 'help4', title: '复制粘贴' },
-      { path: 'help5', title: '导出' }
+      { path: 'help2', title: '客户端' }
     ]
   },
   {
@@ -92,8 +85,7 @@ export default [
       { path: 'touchEvent', title: 'TouchEvent plugin' },
       { path: 'nodeImgAdjust', title: 'NodeImgAdjust plugin' },
       { path: 'search', title: 'Search plugin' },
-      { path: 'painter', title: 'Painter plugin' },
-      { path: 'scrollbar', title: 'Scrollbar plugin' }
+      { path: 'painter', title: 'Painter plugin' }
     ]
   }
 ]

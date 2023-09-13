@@ -42,7 +42,7 @@ export default {
       dataList: [
         {
           icon: 'iconstar',
-          value: 'Github star数量700+'
+          value: 'Github star数量600+'
         },
         {
           icon: 'iconfork',
@@ -54,7 +54,7 @@ export default {
         },
         {
           icon: 'iconteamwork',
-          value: '代码贡献者10+'
+          value: '代码贡献者8+'
         }
       ],
       functionList: [

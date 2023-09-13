@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-import { nodeDataNoStylePropList } from '../constants/constant'
 
 //  深度优先遍历树
 export const walk = (
@@ -632,40 +631,4 @@ export const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   )
-}
-
-// 获取对象改变了的的属性
-export const getObjectChangedProps = (oldObject, newObject) => {
-  const res = {}
-  Object.keys(newObject).forEach((prop) => {
-    const oldVal = oldObject[prop]
-    const newVal = newObject[prop]
-    if (getType(oldVal) !== getType(newVal)) {
-      res[prop] = newVal
-      return
-    }
-    if (getType(oldVal) === 'Object') {
-      if (JSON.stringify(oldVal) !== JSON.stringify(newVal)) {
-        res[prop] = newVal
-        return
-      }
-    } else {
-      if (oldVal !== newVal) {
-        res[prop] = newVal
-        return
-      }
-    }
-  })
-  return res
-}
-
-// 判断一个字段是否是节点数据中的样式字段
-export const checkIsNodeStyleDataKey = (key) => {
-  // 用户自定义字段
-  if (/^_/.test(key)) return false
-  // 不在节点非样式字段列表里，那么就是样式字段
-  if (!nodeDataNoStylePropList.includes(key)) {
-    return true
-  }
-  return false
 }

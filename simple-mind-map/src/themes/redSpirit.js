@@ -18,7 +18,11 @@ export default merge(defaultTheme, {
     color: 'rgb(255, 233, 157)',
     borderColor: '',
     borderWidth: 0,
-    fontSize: 24
+    fontSize: 24,
+    active: {
+      borderColor: 'rgb(255, 233, 157)',
+      borderWidth: 3
+    }
   },
   // 二级节点样式
   second: {
@@ -26,12 +30,18 @@ export default merge(defaultTheme, {
     color: 'rgb(211, 58, 21)',
     borderColor: 'rgb(222, 101, 85)',
     borderWidth: 2,
-    fontSize: 18
+    fontSize: 18,
+    active: {
+      borderColor: 'rgb(255, 233, 157)'
+    }
   },
   // 三级及以下节点样式
   node: {
     fontSize: 14,
-    color: 'rgb(144, 71, 43)'
+    color: 'rgb(144, 71, 43)',
+    active: {
+      borderColor: 'rgb(255, 233, 157)'
+    }
   },
   // 概要节点样式
   generalization: {
@@ -39,6 +49,9 @@ export default merge(defaultTheme, {
     fillColor: 'rgb(255, 247, 211)',
     borderColor: 'rgb(255, 202, 162)',
     borderWidth: 2,
-    color: 'rgb(187, 101, 69)'
+    color: 'rgb(187, 101, 69)',
+    active: {
+      borderColor: 'rgb(222, 101, 85)'
+    }
   }
 })

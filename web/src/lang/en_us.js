@@ -50,8 +50,7 @@ export default {
     rootStyle: 'Root Node',
     associativeLineText: 'Associative line text',
     fontFamily: 'Font family',
-    fontSize: 'Font size',
-    isShowScrollbar: 'Is show scrollbar'
+    fontSize: 'Font size'
   },
   color: {
     moreColor: 'More color'

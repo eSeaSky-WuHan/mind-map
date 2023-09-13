@@ -19,7 +19,10 @@ export default {
       borderColor: '#fff',
       borderWidth: 3,
       fontSize: 24,
-      shape: 'parallelogram'
+      shape: 'parallelogram',
+      active: {
+        borderColor: 'rgba(2, 167, 240, 0.5)',
+      }
     },
     // 二级节点样式
     second: {
@@ -28,12 +31,18 @@ export default {
       borderColor: '#fff',
       borderWidth: 3,
       fontSize: 18,
-      shape: 'diamond'
+      shape: 'diamond',
+      active: {
+        borderColor: 'rgba(2, 167, 240, 0.5)',
+      }
     },
     // 三级及以下节点样式
     node: {
       fontSize: 14,
-      color: '#fff'
+      color: '#fff',
+      active: {
+        borderColor: 'rgba(2, 167, 240, 0.5)'
+      }
     },
     // 概要节点样式
     generalization: {
@@ -41,7 +50,10 @@ export default {
       fillColor: '#fff',
       borderColor: 'rgb(0, 117, 255)',
       borderWidth: 2,
-      color: 'rgb(0, 21, 21)'
+      color: 'rgb(0, 21, 21)',
+      active: {
+        borderColor: 'rgb(0, 243, 255)'
+      }
     }
   }
   

@@ -249,10 +249,6 @@ export const CONSTANTS = {
   PASTE_TYPE: {
     CLIP_BOARD: 'clipBoard',
     CANVAS: 'canvas'
-  },
-  SCROLL_BAR_DIR: {
-    VERTICAL: 'vertical',
-    HORIZONTAL: 'horizontal'
   }
 }
 
@@ -329,9 +325,7 @@ export const nodeDataNoStylePropList = [
   'uid',
   'activeStyle',
   'associativeLineTargets',
-  'associativeLineTargetControlOffsets',
-  'associativeLinePoint',
-  'associativeLineText'
+  'associativeLineTargetControlOffsets'
 ]
 
 // 数据缓存
@@ -349,29 +343,3 @@ export const ERROR_TYPES = {
   BEFORE_TEXT_EDIT_ERROR: 'before_text_edit_error',
   EXPORT_ERROR: 'export_error'
 }
-
-// a4纸的宽高
-export const a4Size = {
-  width: 592.28,
-  height: 841.89
-}
-
-// css
-export const cssContent = `
-  /* 鼠标hover和激活时渲染的矩形 */
-  .smm-hover-node{
-    display: none;
-    opacity: 0.6;
-    stroke-width: 1;
-  }
-
-  .smm-node:hover .smm-hover-node{
-    display: block;
-  }
-
-  .smm-node.active .smm-hover-node{
-    display: block;
-    opacity: 1;
-    stroke-width: 2;
-  }
-`

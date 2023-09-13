@@ -160,8 +160,12 @@ function createTextNode() {
     return this.createRichTextNode()
   }
   let g = new G()
-  let fontSize = this.getStyle('fontSize', false)
-  let lineHeight = this.getStyle('lineHeight', false)
+  let fontSize = this.getStyle('fontSize', false, this.nodeData.data.isActive)
+  let lineHeight = this.getStyle(
+    'lineHeight',
+    false,
+    this.nodeData.data.isActive
+  )
   // 文本超长自动换行
   let textStyle = this.style.getTextFontStyle()
   let textArr = this.nodeData.data.text.split(/\n/gim)

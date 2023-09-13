@@ -753,16 +753,6 @@
           </el-select>
         </div>
       </div>
-      <!-- 是否显示滚动条 -->
-      <div class="row">
-        <div class="rowItem">
-          <el-checkbox
-            v-model="localConfigs.isShowScrollbar"
-            @change="updateLocalConfig('isShowScrollbar', $event)"
-            >{{ $t('baseStyle.isShowScrollbar') }}</el-checkbox
-          >
-        </div>
-      </div>
     </div>
   </Sidebar>
 </template>
@@ -858,10 +848,7 @@ export default {
         }
       },
       updateWatermarkTimer: null,
-      enableNodeRichText: true,
-      localConfigs: {
-        isShowScrollbar: false
-      }
+      enableNodeRichText: true
     }
   },
   computed: {
@@ -907,7 +894,9 @@ export default {
     }
   },
   created() {
-    this.initLoacalConfig()
+    this.enableNodeRichText = this.localConfig.openNodeRichText
+    this.mousewheelAction = this.localConfig.mousewheelAction
+    this.mousewheelZoomActionReverse = this.localConfig.mousewheelZoomActionReverse
     this.$bus.$on('setData', this.onSetData)
   },
   beforeDestroy() {
@@ -971,18 +960,6 @@ export default {
         'mousewheelZoomActionReverse'
       ].forEach(key => {
         this.config[key] = this.mindMap.getConfig(key)
-      })
-    },
-
-    // 初始化本地配置
-    initLoacalConfig() {
-      this.enableNodeRichText = this.localConfig.openNodeRichText
-      this.mousewheelAction = this.localConfig.mousewheelAction
-      this.mousewheelZoomActionReverse = this.localConfig.mousewheelZoomActionReverse
-      ;[
-        'isShowScrollbar'
-      ].forEach(key => {
-        this.localConfigs[key] = this.localConfig[key]
       })
     },
 
@@ -1061,7 +1038,11 @@ export default {
       }, 300)
     },
 
-    // 设置margin
+    /**
+     * @Author: 王林
+     * @Date: 2021-07-03 22:08:12
+     * @Desc: 设置margin
+     */
     updateMargin(type, value) {
       this.style[type] = value
       if (!this.data.theme.config[this.marginActiveTab]) {
@@ -1097,11 +1078,12 @@ export default {
       })
     },
 
-    // 本地配置
-    updateLocalConfig(key, value) {
+    // 切换鼠标滚轮的行为
+    mousewheelActionChange(e) {
       this.setLocalConfig({
-        [key]: value
+        mousewheelAction: e
       })
+      this.mindMap.updateConfig
     }
   }
 }
