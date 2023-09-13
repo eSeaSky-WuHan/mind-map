@@ -342,7 +342,7 @@ class Render {
         }
       })
     })
-    this.mindMap.emit('node_active', null, this.activeNodeList)
+    this.mindMap.emit('node_active', null, [...this.activeNodeList])
   }
 
   //  清除当前激活的节点
@@ -382,7 +382,7 @@ class Render {
   //  检索某个节点在激活列表里的索引
   findActiveNodeIndex(node) {
     return this.activeNodeList.findIndex(item => {
-      return item === node
+      return item.uid === node.uid
     })
   }
 
@@ -390,7 +390,7 @@ class Render {
   getNodeIndex(node) {
     return node.parent
       ? node.parent.children.findIndex(item => {
-          return item === node
+          return item.uid === node.uid
         })
       : 0
   }
@@ -407,7 +407,7 @@ class Render {
           // 激活节点需要显示展开收起按钮
           node.showExpandBtn()
           setTimeout(() => {
-            node.updateNodeShape()
+            node.updateNodeActive()
           }, 0)
         }
       },
@@ -416,6 +416,7 @@ class Render {
       0,
       0
     )
+    this.mindMap.emit('node_active', null, [...this.activeNodeList])
   }
 
   //  回退
@@ -552,7 +553,7 @@ class Render {
     let parent = node.parent
     let childList = parent.children
     let index = childList.findIndex(item => {
-      return item === node
+      return item.uid === node.uid
     })
     if (index === -1 || index === 0) {
       return
@@ -579,7 +580,7 @@ class Render {
     let parent = node.parent
     let childList = parent.children
     let index = childList.findIndex(item => {
-      return item === node
+      return item.uid === node.uid
     })
     if (index === -1 || index === childList.length - 1) {
       return
@@ -751,7 +752,7 @@ class Render {
     let nodeParent = node.parent
     let nodeBorthers = nodeParent.children
     let nodeIndex = nodeBorthers.findIndex(item => {
-      return item === node
+      return item.uid === node.uid
     })
     if (nodeIndex === -1) {
       return
@@ -763,7 +764,7 @@ class Render {
     let existParent = exist.parent
     let existBorthers = existParent.children
     let existIndex = existBorthers.findIndex(item => {
-      return item === exist
+      return item.uid === exist.uid
     })
     if (existIndex === -1) {
       return
@@ -790,7 +791,7 @@ class Render {
     let nodeParent = node.parent
     let nodeBorthers = nodeParent.children
     let nodeIndex = nodeBorthers.findIndex(item => {
-      return item === node
+      return item.uid === node.uid
     })
     if (nodeIndex === -1) {
       return
@@ -802,7 +803,7 @@ class Render {
     let existParent = exist.parent
     let existBorthers = existParent.children
     let existIndex = existBorthers.findIndex(item => {
-      return item === exist
+      return item.uid === exist.uid
     })
     if (existIndex === -1) {
       return
@@ -854,7 +855,7 @@ class Render {
         }
       }
     }
-    this.mindMap.emit('node_active', null, this.activeNodeList)
+    this.mindMap.emit('node_active', null, [...this.activeNodeList])
     this.mindMap.render()
   }
 
@@ -886,7 +887,7 @@ class Render {
     let copyData = copyNodeTree({}, node, true)
     this.removeActiveNode(node)
     this.removeOneNode(node)
-    this.mindMap.emit('node_active', null, this.activeNodeList)
+    this.mindMap.emit('node_active', null, [...this.activeNodeList])
     this.mindMap.render()
     if (callback && typeof callback === 'function') {
       callback(copyData)
@@ -901,7 +902,7 @@ class Render {
     // let copyData = copyNodeTree({}, node, false, true)
     this.removeActiveNode(node)
     this.removeOneNode(node)
-    this.mindMap.emit('node_active', null, this.activeNodeList)
+    this.mindMap.emit('node_active', null, [...this.activeNodeList])
     toNode.nodeData.children.push(node.nodeData)
     this.mindMap.render()
     if (toNode.isRoot) {
@@ -921,19 +922,9 @@ class Render {
   }
 
   //  设置节点样式
-  setNodeStyle(node, prop, value, isActive) {
-    let data = {}
-    if (isActive) {
-      data = {
-        activeStyle: {
-          ...(node.nodeData.data.activeStyle || {}),
-          [prop]: value
-        }
-      }
-    } else {
-      data = {
-        [prop]: value
-      }
+  setNodeStyle(node, prop, value) {
+    let data = {
+      [prop]: value
     }
     // 如果开启了富文本，则需要应用到富文本上
     if (this.mindMap.richText) {
@@ -954,18 +945,8 @@ class Render {
   }
 
   //  设置节点多个样式
-  setNodeStyles(node, style, isActive) {
-    let data = {}
-    if (isActive) {
-      data = {
-        activeStyle: {
-          ...(node.nodeData.data.activeStyle || {}),
-          ...style
-        }
-      }
-    } else {
-      data = style
-    }
+  setNodeStyles(node, style) {
+    let data = { ...style }
     // 如果开启了富文本，则需要应用到富文本上
     if (this.mindMap.richText) {
       let config = this.mindMap.richText.normalStyleToRichTextStyle(style)
@@ -1000,7 +981,7 @@ class Render {
     } else {
       node.hideExpandBtn()
     }
-    node.updateNodeShape()
+    node.updateNodeActive()
   }
 
   //  设置节点是否展开
