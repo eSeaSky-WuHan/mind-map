@@ -255,95 +255,9 @@ class RichText {
       this.setTextStyleIfNotRichText(node)
     }
     this.cacheEditingText = ''    // 监听input事件
-    this.textEditNode.addEventListener('input', this.textChange.bind(this,paddingX))
   }
 
-  textChange(paddingX) {
-    const node = this.node
-    const el = this.textEditNode
-    // 获取节点标签
-    const rect = node.group.find('smm-node-shape')
-    // 获取节点外框
-    const rectBorder = node.group.find('.smm-node')
-    // 计算除文字以外内容的宽度和高度
-    const otherWidth =
-        node._rectInfo.textContentWidth -
-        node._textData.node.node.getBoundingClientRect().width
-    const otherHeight = node.height - node._rectInfo.textContentHeight
-    const maxContentWidth = otherWidth + el.clientWidth
-    // 更新节点宽高
-    if (maxContentWidth+paddingX * 2 > node.width) {
-      // 节点宽度更新时清除收起按钮
-      rect.width(maxContentWidth + paddingX * 2)
-      if (rectBorder) {
-        rectBorder.width(maxContentWidth+ paddingX * 2)
-      }
-    }
-    if (otherHeight + el.clientHeight > node.height) {
-      rect.height(otherHeight + el.clientHeight)
-      if (rectBorder) {
-        rectBorder.height(otherHeight + el.clientHeight)
-      }
-    }
-    this.calcuPosition(node, el)
-  }
 
-  calcuPosition(node, el) {
-    // 计算超链接、备注、标签图标的位置
-    if (node._hyperlinkData) {
-      const hyperlinkNode = node._hyperlinkData.node
-      let newX = el.clientWidth + this.mindMap.opt.textContentMargin
-      if (node._iconData) {
-        newX =
-            newX +
-            node._iconData.length *
-            (this.iconsize + this.mindMap.opt.textContentMargin)
-      }
-      hyperlinkNode.x(newX)
-    }
-    if (node._tagData) {
-      const tagData = node._tagData
-      let newX = el.clientWidth + this.mindMap.opt.textContentMargin
-      if (node._iconData) {
-        newX =
-            newX +
-            node._iconData.length *
-            (this.iconsize + this.mindMap.opt.textContentMargin)
-      }
-      if (node._hyperlinkData) {
-        newX =
-            newX +
-            this.iconsize + this.mindMap.opt.textContentMargin
-      }
-      tagData.forEach((item) => {
-        item.node.x(newX)
-        newX = newX + item.width + this.mindMap.opt.textContentMargin
-      })
-    }
-    if (node._noteData) {
-      const noteNode = node._noteData.node
-      let newX = el.clientWidth + this.mindMap.opt.textContentMargin
-      if (node._tagData) {
-        const tagData = node._tagData
-        if (node._iconData) {
-          newX =
-              newX +
-              node._iconData.length *
-              (this.iconsize + this.mindMap.opt.textContentMargin)
-        }
-        if (node._hyperlinkData) {
-          newX =
-              newX +
-              this.iconsize + this.mindMap.opt.textContentMargin
-        }
-        tagData.forEach((item) => {
-          item.node.x(newX)
-          newX = newX + item.width + this.mindMap.opt.textContentMargin
-        })
-      }
-      noteNode.x(newX)
-    }
-  }
   // 如果是非富文本的情况，需要手动应用文本样式
   setTextStyleIfNotRichText(node) {
     let style = {
