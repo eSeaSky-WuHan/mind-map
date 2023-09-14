@@ -842,7 +842,7 @@ class Render {
       // 如果只选中了一个节点，删除后激活其兄弟节点或者父节点
       if (
           this.activeNodeList.length === 1 &&
-          !this.activeNodeList[0].isGeneralization
+          !this.activeNodeList[0].isGeneralization&&this.mindMap.opt.deleteNodeActive
       ) {
         const node = this.activeNodeList[0]
         const broList = node.parent.children
